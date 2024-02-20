@@ -16,12 +16,19 @@ export default function Signup({navigation}) {
       <Text style={{fontSize:30, textAlign:"center", fontWeight:"bold", marginVertical:30}}>Login</Text>
      </View>
      <View style={{marginTop:20, backgroundColor:"white", paddingHorizontal:20, borderRadius:20, paddingVertical:10}}>
-     <TextInput style={{color:"black",fontWeight:"bold",marginBottom:15,backgroundColor:"white"}} 
+     <TextInput 
+     theme={{ roundness: 50}}
+     underlineColor='white'
+     style={{color:"black",fontWeight:"bold",marginBottom:15,backgroundColor:"white"}} 
         mode="offline"
         label="username"
         left={<TextInput.Icon size={20} icon={"account-outline"} color={'#F6C079'} style={{backgroundColor:"#FAEBE3"}}></TextInput.Icon>}
         />
-        <TextInput style={{color:"black",fontWeight:"bold",marginBottom:15, backgroundColor:"white"}} 
+        
+        <TextInput 
+        theme={{ roundness: 50}}
+        underlineColor='white'
+        style={{color:"black",fontWeight:"bold",marginBottom:1, backgroundColor:"white"}} 
         mode="flat"
         label="Password"
         secureTextEntry
@@ -37,7 +44,7 @@ export default function Signup({navigation}) {
           navigation.navigate('signin')
         }><Text style={{color:"white", fontWeight:"bold"}}>Login</Text></TouchableOpacity>
       </View>
-      <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:60, marginTop:100}}>
+      <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:60, marginTop:80}}>
       <View style={{ backgroundColor: 'white', padding: 8, borderRadius: "50%", }}>
         <Entypo name="facebook-with-circle" color="#30A2FF" size={20} backgroundColor="white"/>
         </View>
