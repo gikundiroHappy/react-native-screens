@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <View style={{backgroundColor:"#EDEBF5" }}>
         <View>
-            <Text style={{fontWeight:"bold",marginHorizontal:40,fontSize:30, marginVertical:20}}>Home</Text>
+            <Text style={{fontWeight:"bold",marginHorizontal:40,fontSize:30, marginVertical:40}}>Home</Text>
         </View>
       <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:20, marginTop:5,paddingBottom:20}}>
 
@@ -108,7 +108,7 @@ export default function Home() {
             </View>
            
         </View>
-        <View style={{paddingBottom:5, padding:15,borderRadius:20, display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+        <View style={{paddingBottom:35, padding:15,borderRadius:20, display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
       <View style={{display:"flex",flexDirection:"row", gap:10}}>
             <View style={{ backgroundColor: '#FAE0E7', padding: 1, borderRadius: "100%", display:"flex", justifyContent:"center",alignItems:"center", flexDirection:"row",width: 40,height: 40,marginBottom:20}}>
         <FontAwesome name="bitcoin" color="#F0458A" size={15}/>

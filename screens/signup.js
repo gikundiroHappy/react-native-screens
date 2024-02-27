@@ -8,7 +8,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 export default function Signup({navigation}) {
   return (
     <View>
-         <View style={{position:"relative",width:"100%", display:"flex"}}>
+         <View style={{position:"relative",width:"100%", display:"flex", }}>
         <Image source={require('../assets/login.png')} style={{width:"100%"}}/>
       </View>
       <View style={{position:"absolute",width:"100%",marginTop:150, padding:20,backgroundColor:"#F0F0F0", borderTopRightRadius:40, borderTopLeftRadius:40}}>

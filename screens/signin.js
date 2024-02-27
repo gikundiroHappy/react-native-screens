@@ -8,7 +8,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 export default function Signin({navigation}) {
   return (
     <View>
-          <View style={{ display:"flex", flexDirection:"row",justifyContent:"center", marginTop:20}}>
+          <View style={{ display:"flex", flexDirection:"row",justifyContent:"center", marginTop:50}}>
         <Image source={require('../assets/register.png')} style={{width:"50%"}}/>
       </View>
       <View style={{}}>
@@ -48,7 +48,7 @@ export default function Signin({navigation}) {
         }
         ><Text style={{color:"white", fontWeight:"bold"}}>Register</Text></TouchableOpacity>
       </View>
-      <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:60, marginTop:20}}>
+      <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:60, marginTop:35}}>
       <View style={{ backgroundColor: 'white', padding: 8, borderRadius: "50%" }}>
         <Entypo name="facebook-with-circle" color="#2C68FC" size={20} backgroundColor="white"/>
         </View>

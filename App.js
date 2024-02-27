@@ -14,13 +14,13 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
    <NavigationContainer>
-   <Stack.Navigator initialRouteName='task'>
-        <Stack.Screen name="signup" component={Signup} optionsHeader={{HeaderShown:false}}/>
-        <Stack.Screen name="home" component={Home} optionsHeader={{HeaderShown:false}}/>
-        <Stack.Screen name="signin" component={Signin} optionsHeader={{HeaderShown:false}}/>
-        <Stack.Screen name="login" component={Login} optionsHeader={{HeaderShown:false}}/>
-        <Stack.Screen name="images" component={Images} optionsHeader={{HeaderShown:false}}/>
-        <Stack.Screen name="task" component={Task} optionHeader={{HeaderShown:false}}/>
+   <Stack.Navigator initialRouteName='signup'>
+        <Stack.Screen name="signup" component={Signup} options={{headerShown:false}}/>
+        <Stack.Screen name="home" component={Home} options={{ headerShown: false }}/>
+        <Stack.Screen name="signin" component={Signin} options={{ headerShown: false }}/>
+        <Stack.Screen name="login" component={Login} options={{ headerShown: false }}/>
+        <Stack.Screen name="images" component={Images} options={{ headerShown: false }}/>
+        <Stack.Screen name="task" component={Task} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
  
