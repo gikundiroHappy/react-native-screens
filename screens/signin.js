@@ -1,5 +1,5 @@
 import React,{useContext} from 'react';
-import {Text, View,Image,TouchableOpacity,KeyboardAvoidingView } from 'react-native';
+import {Text, View,Image,TouchableOpacity,KeyboardAvoidingView, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -41,7 +41,7 @@ export default function Signin({navigation}) {
 
   return (
     <KeyboardAvoidingView>
-    <View>
+    <ScrollView>
       <FlashMessage position="top" style={{ zIndex: 999 }} />
           <View style={{ display:"flex", flexDirection:"row",justifyContent:"center", marginTop:50}}>
         <Image source={require('../assets/register.png')} style={{width:"50%"}}/>
@@ -85,7 +85,16 @@ export default function Signin({navigation}) {
          onPress={HandleSubmit}
         ><Text style={{color:"white", fontWeight:"bold"}}>Register</Text></TouchableOpacity>
       </View>
-      <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:60, marginTop:35}}>
+
+      <View style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",paddingVertical:15,gap:10}}>
+        <Text style={{color:"#9DA5FA",fontWeight:"bold"}} >
+          Already have an account?
+        </Text> 
+        <TouchableOpacity onPress={()=>navigation.navigate('signup')}>
+          <Text style={{fontWeight:"bold",paddingVertical:10}}>Login</Text></TouchableOpacity>
+      </View>
+
+      <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:60,}}>
       <View style={{ backgroundColor: 'white', padding: 8, borderRadius: "50%" }}>
         <Entypo name="facebook-with-circle" color="#2C68FC" size={20} backgroundColor="white"/>
         </View>
@@ -96,7 +105,7 @@ export default function Signin({navigation}) {
         <AntDesign name="apple1" color="black" size={20} backgroundColor=""/>
         </View>
       </View>
-    </View>
+    </ScrollView>
     </KeyboardAvoidingView>
   );
 }

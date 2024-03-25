@@ -1,22 +1,54 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect,useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut,signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { FIREBASE_AUTH } from "../firebaseConfiguration";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const LoginContext = createContext();
 
-export default function ThemeProvidercontext({children}){
-    const [user,setUser] = React.useState("")
+export function ThemeProvidercontext({children}){
+    const [user,setUser] = useState("")
+    const [userToken,setUserToken] = useState(null)
+    const [error,setError] = useState('')
+    const [isLogedIn,setIsLogedIn] = useState(false)
+    
 
-function HandleLogin(email,password){
-    return signInWithEmailAndPassword(FIREBASE_AUTH,email,password)
-}
+    const HandleLogin= async(email, password) => {
+        try {
+          const userCredential = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+          const userToken = userCredential.user.accessToken;
+          setUserToken(userToken);
+          await AsyncStorage.setItem('userToken', userToken);
+          await AsyncStorage.setItem('userEmail', email);
+        //   setIsLogedIn(true)
+          console.log(userCredential);
+          return userCredential;
+        } catch (error) {
+          console.log(error);
+          setError(error.code)
+        }
+      }
+      
 
 function HandleRegister(email,password){
     return createUserWithEmailAndPassword(FIREBASE_AUTH,email,password)
 }
 
 function LogOut(){
+    setUserToken(null)
+    // setIsLogedIn(false)
+    AsyncStorage.removeItem('userToken')
     return signOut(FIREBASE_AUTH)
+}
+
+const isLoggedIn =async()=>{
+    try {
+        let userTok = await AsyncStorage.getItem('userToken');
+        let userEmail = await AsyncStorage.getItem('userEmail');
+        setUserToken(userTok)
+        setUser(userEmail);
+    } catch (error) {
+     console.log(error)   
+    }
 }
 
 function GoogleSigin(){
@@ -28,11 +60,12 @@ function GoogleSigin(){
 useEffect(()=>{
   onAuthStateChanged(FIREBASE_AUTH,(currentUser)=>{
     setUser(currentUser);
-  })
+  });
+  isLoggedIn();
 },[])
 
 return(
-    <LoginContext.Provider value={{HandleLogin,HandleRegister,user,LogOut,GoogleSigin}}>
+    <LoginContext.Provider value={{HandleLogin,HandleRegister,user,LogOut,GoogleSigin,userToken,error,setError}}>
         {children}
     </LoginContext.Provider>
 )

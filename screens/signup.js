@@ -13,29 +13,52 @@ export default function Signup({navigation}) {
   const [email,setEmail]=React.useState('');
   const [password,setPassword]=React.useState('')
 
-  const {HandleLogin,GoogleSigin} = useContext(LoginContext)
+  const {HandleLogin,GoogleSigin,error,setError} = useContext(LoginContext)
 
-  const HandleSubmit = async() =>{
-   try {
-     await HandleLogin(email,password)
-     showMessage({
-      message: "you are logged in",
-      hideStatusBar:true,
-      type: "success",
-      icon:"success",
-      duration:6000
-    });
-    navigation.navigate('home')
-   } catch (error) {
-    showMessage({
-      message: error.code.toString(),
-      hideStatusBar:true,
-      type: "danger",
-      icon:"danger",
-     duration:3000
-    });
+  // const HandleSubmit = async() =>{
+  //  try {
+  //    await HandleLogin(email,password)
+  //    showMessage({
+  //     message: "you are logged in",
+  //     hideStatusBar:true,
+  //     type: "success",
+  //     icon:"success",
+  //     duration:6000
+  //   });
+  //   navigation.navigate('home')
+  //  } catch (error) {
+  //   showMessage({
+  //     message: error.code.toString(),
+  //     hideStatusBar:true,
+  //     type: "danger",
+  //     icon:"danger",
+  //    duration:3000
+  //   });
+  //  }
+  // }
+
+  const HandleSubmit = () =>{
+     if(email == '' && password==''){
+      showMessage({
+        message:"empty",
+        type: "danger",
+        icon:"danger",
+        duration:3000
+      })
+    }
+      else{
+        HandleLogin(email,password)
+        if(error.length!=0){
+          showMessage({
+            message:`${error}`,
+            type: "danger",
+            icon:"danger",
+            duration:3000
+          })
+        }
+      }
+     
    }
-  }
 
   const HandleGoogleSignin = async() =>{
     try {
@@ -81,9 +104,13 @@ export default function Signup({navigation}) {
         />
      </View>
      <View style={{paddingTop:30, display:"flex",flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+      <View>
         <Text style={{color:"#9DA5FA",fontWeight:"bold"}} >
-          Forget passord?
-        </Text>
+          Don't Have an account?
+        </Text> 
+        <TouchableOpacity onPress={()=>navigation.navigate('signin')}>
+          <Text style={{fontWeight:"bold",paddingVertical:10}}>Register</Text></TouchableOpacity>
+      </View>
         <TouchableOpacity style={{alignItems:"center",borderRadius:30,paddingHorizontal:60, paddingVertical:15, backgroundColor:"black" }}
          onPress={HandleSubmit}>
           <Text style={{color:"white", fontWeight:"bold"}}>Login</Text></TouchableOpacity>
