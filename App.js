@@ -8,11 +8,13 @@ import Signin from './screens/signin';
 import Login from './screens/Login';
 import Home from './screens/home';
 import Task from './screens/task'
+import ThemeProvidercontext from './context/screenscontext';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <ThemeProvidercontext>
    <NavigationContainer>
    <Stack.Navigator initialRouteName='signup'>
         <Stack.Screen name="signup" component={Signup} options={{headerShown:false}}/>
@@ -23,6 +25,7 @@ export default function App() {
         <Stack.Screen name="task" component={Task} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </ThemeProvidercontext>
  
   );
 }

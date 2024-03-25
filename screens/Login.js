@@ -3,8 +3,9 @@ import {View,Text, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { TextInput,Checkbox } from 'react-native-paper';
 
+export default function Login() {
 
-export default function App() {
+
   return (
      <View style={{padding:40}}>
      <View>

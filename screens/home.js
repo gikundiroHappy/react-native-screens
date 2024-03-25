@@ -1,17 +1,32 @@
-import React from 'react';
-import {View,Text,ScrollView} from 'react-native';
+import React, { useContext } from 'react';
+import {View,Text,ScrollView, TouchableOpacity} from 'react-native';
 import Fontisto from "react-native-vector-icons/Fontisto"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
+import { LoginContext } from '../context/screenscontext';
 
 export default function Home() {
+
+  const {user, LogOut} = useContext(LoginContext);
+  console.log(user);
+
+  const HandleLogout = async() =>{
+    try {
+      await LogOut()
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <View style={{backgroundColor:"#EDEBF5" }}>
-        <View>
+        <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
             <Text style={{fontWeight:"bold",marginHorizontal:40,fontSize:30, marginVertical:40}}>Home</Text>
+            <Text style={{fontSize:15,paddingRight:35,color:"#7E6AFF"}}>{user && user.email}</Text>
+            <TouchableOpacity onPress={HandleLogout}><Text style={{marginRight:20,fontSize:13,fontWeight:"bold"}}>logout</Text></TouchableOpacity>
         </View>
       <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:20, marginTop:5,paddingBottom:20}}>
 
