@@ -13,29 +13,8 @@ export default function Signup({navigation}) {
   const [email,setEmail]=React.useState('');
   const [password,setPassword]=React.useState('')
 
-  const {HandleLogin,GoogleSigin,error,setError} = useContext(LoginContext)
+  const {HandleLogin,GoogleSigin,error} = useContext(LoginContext)
 
-  // const HandleSubmit = async() =>{
-  //  try {
-  //    await HandleLogin(email,password)
-  //    showMessage({
-  //     message: "you are logged in",
-  //     hideStatusBar:true,
-  //     type: "success",
-  //     icon:"success",
-  //     duration:6000
-  //   });
-  //   navigation.navigate('home')
-  //  } catch (error) {
-  //   showMessage({
-  //     message: error.code.toString(),
-  //     hideStatusBar:true,
-  //     type: "danger",
-  //     icon:"danger",
-  //    duration:3000
-  //   });
-  //  }
-  // }
 
   const HandleSubmit = () =>{
      if(email == '' && password==''){
@@ -57,7 +36,6 @@ export default function Signup({navigation}) {
           })
         }
       }
-     
    }
 
   const HandleGoogleSignin = async() =>{
@@ -68,7 +46,6 @@ export default function Signup({navigation}) {
     }
    }
    
-
   return (
     <View>
       <FlashMessage position="top" style={{ zIndex: 999 }} />

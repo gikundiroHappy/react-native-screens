@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect,useState } from 'react';
 import {View,Text,ScrollView, TouchableOpacity} from 'react-native';
 import Fontisto from "react-native-vector-icons/Fontisto"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -7,11 +7,19 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { LoginContext } from '../context/screenscontext';
+import { getItemAsync } from "expo-secure-store";
 
 export default function Home() {
 
-  const {user, LogOut} = useContext(LoginContext);
-  console.log(user);
+  const [checkEmail,setCheckEmail] = useState('')
+
+  const {LogOut} = useContext(LoginContext);
+
+  getItemAsync("userEmail").then((data)=>{
+    setCheckEmail(JSON.parse(data))
+  }).catch((er)=>{
+    console.log(er)
+  })
 
   const HandleLogout = async() =>{
     try {
@@ -25,7 +33,7 @@ export default function Home() {
     <View style={{backgroundColor:"#EDEBF5" }}>
         <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
             <Text style={{fontWeight:"bold",marginHorizontal:40,fontSize:30, marginVertical:40}}>Home</Text>
-            <Text style={{fontSize:15,paddingRight:35,color:"#7E6AFF"}}>{user && user.email}</Text>
+            <Text style={{fontSize:15,paddingRight:35,color:"#7E6AFF"}}>{checkEmail}</Text>
             <TouchableOpacity onPress={HandleLogout}><Text style={{marginRight:20,fontSize:13,fontWeight:"bold"}}>logout</Text></TouchableOpacity>
         </View>
       <View style={{display:"flex", flexDirection:"row",justifyContent:"space-around",marginHorizontal:20, marginTop:5,paddingBottom:20}}>

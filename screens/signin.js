@@ -17,7 +17,6 @@ export default function Signin({navigation}) {
   const HandleSubmit = async() =>{
     try {
       await HandleRegister(email,password)
-      console.log(email,password)
       showMessage({
        message: "you have registered",
        hideStatusBar:true,
@@ -27,7 +26,6 @@ export default function Signin({navigation}) {
      });
      navigation.navigate('signup')
     } catch (error) {
-      console.log(error)
      showMessage({
        message: error.code.toString(),
        hideStatusBar:true,
