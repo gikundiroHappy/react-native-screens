@@ -69,7 +69,6 @@ const SaveItem = async(item) => {
             item:item,
             ischecked: false,
         })
-          console.log(response);
     } catch (error) {
         console.log(error)
     }
@@ -83,7 +82,6 @@ const ReadItem = async() => {
             ...doc.data(),
             id:doc.id
         })))
-          console.log(readResponse);
     } catch (error) {
         console.log(error)
     }
@@ -92,21 +90,30 @@ const ReadItem = async() => {
 const DeleteItem = async(id) => {
     try {
         const deleteResponse = await deleteDoc(doc(FIREBASE_db,"todosList",id))
-          console.log(deleteResponse);
-          console.log("deleted");
           await ReadItem();
     } catch (error) {
         console.log(error)
     }
 }
 
-const UpdateItem = async(id) => {
+const UpdateItem = async(id,isChecked) => {
     try {
         const updateResponse = await updateDoc(doc(FIREBASE_db,"todosList",id),{
-            ischecked:ischecked
+            ischecked:isChecked
         })
-          console.log(updateResponse);
-          console.log("deleted");
+          await ReadItem();
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const DeleteAllItem = async() => {
+    try {
+        const deleteallResponse = await getDocs(collection(FIREBASE_db,"todosList"))
+        deleteallResponse.forEach(async (doc) => {
+            await deleteDoc(doc.ref);
+        });
+          console.log("dated");
           await ReadItem();
     } catch (error) {
         console.log(error)
@@ -114,7 +121,7 @@ const UpdateItem = async(id) => {
 }
 
 return(
-    <LoginContext.Provider value={{HandleLogin,HandleRegister,LogOut,GoogleSigin,userToken,error, SaveItem,ReadItem,todos,DeleteItem,UpdateItem}}>
+    <LoginContext.Provider value={{HandleLogin,HandleRegister,LogOut,GoogleSigin,userToken,error, SaveItem,ReadItem,todos,DeleteItem,UpdateItem,DeleteAllItem}}>
         {children}
     </LoginContext.Provider>
 )

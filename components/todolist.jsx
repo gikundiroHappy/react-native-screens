@@ -8,11 +8,9 @@ export default function Todolist({name,ischecked,id}) {
 
   const [isChecked,setIsChecked] = useState(ischecked)
   const {DeleteItem,UpdateItem} = useContext(LoginContext)
-  console.log(isChecked)
 
   const toggleChecked = () => {
     setIsChecked(!isChecked);
-    console.log(isChecked)
 };
 
 const Handledelete = () => {
@@ -20,8 +18,8 @@ const Handledelete = () => {
 };
 
 useEffect(()=>{
-  UpdateItem(id)
-},[ischecked])
+  UpdateItem(id,isChecked)
+},[isChecked])
 
   return (
     <View style={{ display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",backgroundColor:"white",marginTop:20,paddingHorizontal:20}}>
@@ -30,10 +28,10 @@ useEffect(()=>{
    {
     isChecked ? 
     (
-      <><MaterialCommunityIcons name='checkbox-marked-circle' size={24} onPress={toggleChecked}/></>
+      <><MaterialCommunityIcons name='checkbox-marked-circle' size={24} color="#7E6AFF" onPress={toggleChecked}/></>
     ):
     (
-      <><MaterialCommunityIcons name='checkbox-blank-circle-outline' size={24} onPress={toggleChecked}/></>
+      <><MaterialCommunityIcons name='checkbox-blank-circle-outline' color="#7E6AFF" size={24} onPress={toggleChecked}/></>
     )
    }
    </TouchableOpacity>

@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import {View,Text, TouchableOpacity, SafeAreaView,Alert, FlatList} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { TextInput } from 'react-native-paper';
 import { LoginContext } from '../context/screenscontext';
 import Todolist from '../components/todolist';
@@ -8,7 +9,7 @@ export default function Crud() {
 
     const [item,setItem] = useState('')
 
-    const {SaveItem,todos,ReadItem} = useContext(LoginContext)
+    const {SaveItem,todos,ReadItem,DeleteAllItem} = useContext(LoginContext)
 
     useEffect(()=>{
         ReadItem();
@@ -29,7 +30,14 @@ export default function Crud() {
   return (
   <SafeAreaView >
     <View style={{padding:40}}>
-    <Text style={{paddingVertical:20, color:"#7E6AFF",fontWeight:"bold"}}>CRUD</Text>
+
+    <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
+     <Text style={{paddingVertical:20, color:"#7E6AFF",fontWeight:"bold"}}>CRUD</Text>
+     <TouchableOpacity onPress={DeleteAllItem}>
+     <MaterialCommunityIcons name='delete-outline' size={24} color="#7E6AFF"/>
+     </TouchableOpacity>
+    </View>
+
     <View style={{display:"flex",width:"100%",justifyContent:"space-between"}}>
     <TextInput 
      theme={{ roundness: 50}}
