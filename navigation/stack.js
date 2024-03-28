@@ -4,11 +4,10 @@ import Images from './../screens/Images';
 import Signup from './../screens/signup';
 import Signin from './../screens/signin';
 import Login from './../screens/Login';
-import Home from './../screens/home';
 import Task from './../screens/task'
-import { useContext, useEffect, useState } from 'react';
+import { useContext} from 'react';
 import { LoginContext } from '../context/screenscontext';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import Bottomnav from './bottom';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +19,7 @@ const {userToken} = useContext(LoginContext)
    <NavigationContainer>
    <Stack.Navigator initialRouteName='signup'>
         {userToken !== null ? 
-        (<><Stack.Screen name="home" component={Home} options={{ headerShown: false }}/></>):
+        (<><Stack.Screen name="home" component={Bottomnav} options={{ headerShown: false }}/></>):
         (<><Stack.Screen name="signup" component={Signup} options={{headerShown:false}}/></>)
         }
         <Stack.Screen name="signin" component={Signin} options={{ headerShown: false }}/>

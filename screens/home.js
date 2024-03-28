@@ -1,4 +1,4 @@
-import React, { useContext,useEffect,useState } from 'react';
+import React, { useContext,useState } from 'react';
 import {View,Text,ScrollView, TouchableOpacity} from 'react-native';
 import Fontisto from "react-native-vector-icons/Fontisto"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"

@@ -90,7 +90,8 @@ export default function Signup({navigation}) {
       </View>
         <TouchableOpacity style={{alignItems:"center",borderRadius:30,paddingHorizontal:60, paddingVertical:15, backgroundColor:"black" }}
          onPress={HandleSubmit}>
-          <Text style={{color:"white", fontWeight:"bold"}}>Login</Text></TouchableOpacity>
+          <Text style={{color:"white", fontWeight:"bold"}}>Login</Text>
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={{alignItems:"center",borderRadius:30,paddingHorizontal:60, paddingVertical:15, borderWidth:1,borderColor:"#FD8D14",marginTop:20,display:"flex", flexDirection:"row",justifyContent:"center",gap:20 }}
