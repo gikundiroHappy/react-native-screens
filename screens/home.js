@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <View style={{backgroundColor:"#EDEBF5" }}>
         <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-            <Text style={{fontWeight:"bold",marginHorizontal:40,fontSize:30, marginVertical:40}}>Home</Text>
+            <Text style={{fontWeight:"bold",marginHorizontal:40,fontSize:30, marginVertical:40, fontFamily:"Poppins_800ExtraBold_Italic"}}>Home</Text>
             <Text style={{fontSize:15,paddingRight:35,color:"#7E6AFF"}}>{checkEmail}</Text>
             <TouchableOpacity onPress={HandleLogout}><Text style={{marginRight:20,fontSize:13,fontWeight:"bold"}}>logout</Text></TouchableOpacity>
         </View>
