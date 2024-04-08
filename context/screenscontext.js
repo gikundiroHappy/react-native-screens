@@ -4,7 +4,9 @@ import { FIREBASE_AUTH } from "../firebaseConfiguration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { deleteItemAsync,setItemAsync } from "expo-secure-store";
 import {collection, getDocs, updateDoc,deleteDoc,addDoc,doc } from "firebase/firestore";
+import { ref,uploadBytesResumable,getDownloadURL } from "firebase/storage";
 import { FIREBASE_db } from "../firebaseConfiguration";
+import * as ImagePicker from 'expo-image-picker';
 
 
 export const LoginContext = createContext();
@@ -120,9 +122,61 @@ const DeleteAllItem = async() => {
     }
 }
 
+const pickImage = async (setIsLoading,setPhoto) => {
+    setIsLoading(true)
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    })
+
+    if (!result.canceled) {
+        setPhoto(result.assets[0].uri);
+        setInterval(()=>{
+    setIsLoading(false)
+     },2000)
+      }else{
+        setPhoto(null);
+        setInterval(()=>{
+            setIsLoading(false)
+             },2000)
+      }
+}
+
+const AddProduct = async(title,status,amount) => {
+    try {
+        const response = await addDoc(collection(FIREBASE_db,"products"),{
+            title:title,
+            status:status,
+            amount:amount
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    ReadItem();
+}
+
 return(
-    <LoginContext.Provider value={{HandleLogin,HandleRegister,LogOut,GoogleSigin,userToken,error, SaveItem,ReadItem,todos,DeleteItem,UpdateItem,DeleteAllItem}}>
+    <LoginContext.Provider value={{
+        HandleLogin,
+        HandleRegister,
+        LogOut,
+        GoogleSigin,
+        userToken,
+        error, 
+        SaveItem,
+        ReadItem,
+        todos,
+        DeleteItem,
+        UpdateItem,
+        DeleteAllItem,
+        pickImage,
+        AddProduct
+        }}>
+
         {children}
+
     </LoginContext.Provider>
 )
 }

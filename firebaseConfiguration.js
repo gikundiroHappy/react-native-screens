@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import {getAuth} from 'firebase/auth'
 import {getFirestore} from 'firebase/firestore'
+import { getStorage } from "firebase/storage";
 import {FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, FIREBASE_PROJECT_ID, FIREBASE_STORAGE_BUCKET, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_APP_ID} from 'app/config'
 
 const firebaseConfig = {
@@ -17,3 +18,4 @@ const firebaseConfig = {
 export const FIREBASE_APP = initializeApp(firebaseConfig);
 export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
 export const FIREBASE_db = getFirestore(FIREBASE_APP);
+export const FIREBASE_storage = getStorage(FIREBASE_APP);
