@@ -4,7 +4,8 @@ import { FIREBASE_AUTH } from "../firebaseConfiguration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { deleteItemAsync,setItemAsync } from "expo-secure-store";
 import {collection, getDocs, updateDoc,deleteDoc,addDoc,doc } from "firebase/firestore";
-import { ref,uploadBytesResumable,getDownloadURL } from "firebase/storage";
+import { ref,getDownloadURL,uploadBytes } from "firebase/storage";
+import { FIREBASE_storage } from "../firebaseConfiguration";
 import { FIREBASE_db } from "../firebaseConfiguration";
 import * as ImagePicker from 'expo-image-picker';
 
@@ -17,6 +18,7 @@ export function ThemeProvidercontext({children}){
     const [error,setError] = useState('')
 
     const [todos, setTodos] = useState([])
+    const [product, setProduct] = useState([])
     
 
     const HandleLogin= async(email, password) => {
@@ -122,7 +124,7 @@ const DeleteAllItem = async() => {
     }
 }
 
-const pickImage = async (setIsLoading,setPhoto) => {
+const pickImage = async (setIsLoading,setPicurl) => {
     setIsLoading(true)
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -132,29 +134,81 @@ const pickImage = async (setIsLoading,setPhoto) => {
     })
 
     if (!result.canceled) {
-        setPhoto(result.assets[0].uri);
+        setPicurl(result.assets[0].uri);
+        HandlePickImage(result.assets[0].uri,setPicurl)
         setInterval(()=>{
     setIsLoading(false)
      },2000)
       }else{
-        setPhoto(null);
+        setPicurl(null);
         setInterval(()=>{
             setIsLoading(false)
              },2000)
       }
 }
 
-const AddProduct = async(title,status,amount) => {
+const HandlePickImage = async (img, setPicurl) => {
+    try {
+      if (!img) {
+        alert("Please select an image")
+      }
+      else {
+        const timestamp = Date.now(); // Gets the current timestamp
+        const fileExtension = img.split('.').pop(); // Extracts the file extension from the URI
+        var response = await fetch(img)
+        var blob = await response.blob()
+
+
+        const storagePath = `profile/${timestamp}.${fileExtension}`;
+        console.log(storagePath);     
+        
+        const metadata = {
+          contentType: "image/jpeg",
+ 
+        };
+        const imageRef = ref(FIREBASE_storage, storagePath)
+
+        const upload = await uploadBytes(imageRef, blob, metadata);
+
+        console.log(upload);
+
+        var url = await getDownloadURL(imageRef)
+        console.log(url);
+
+        setPicurl(url)
+
+      }
+    }
+
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+const AddProduct = async(title,status,amount,picurl) => {
     try {
         const response = await addDoc(collection(FIREBASE_db,"products"),{
             title:title,
             status:status,
-            amount:amount
+            amount:amount,
+            picurl:picurl,
         })
     } catch (error) {
         console.log(error)
     }
-    ReadItem();
+    ReadProduct()
+}
+
+const ReadProduct = async() => {
+    try {
+        const readResponse = await getDocs(collection(FIREBASE_db,"products"))
+        setProduct(readResponse.docs.map((doc)=>({
+            ...doc.data(),
+            id:doc.id
+        })))
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 return(
@@ -172,7 +226,9 @@ return(
         UpdateItem,
         DeleteAllItem,
         pickImage,
-        AddProduct
+        AddProduct,
+        ReadProduct,
+        product
         }}>
 
         {children}

@@ -1,8 +1,7 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View,Image, TouchableOpacity,StyleSheet ,Modal, ScrollView,KeyboardAvoidingView,Dimensions,Platform} from 'react-native';
 import { TextInput,IconButton } from "react-native-paper";
-// import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/Entypo'; 
 import ArrowIcon from 'react-native-vector-icons/MaterialCommunityIcons'; 
 import { ActivityIndicator } from 'react-native';
@@ -17,19 +16,25 @@ export default function Images() {
   const [title,setTitle] = useState('')
   const [status,setStatus] = useState('')
   const [amount,setAmount] = useState('')
-  const [photo, setPhoto] = useState('')
+  const [picurl,setPicurl] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const {pickImage, AddProduct} = useContext(LoginContext)
+  const {pickImage, AddProduct, ReadProduct,product} = useContext(LoginContext)
 
   const handleAddProducts = () => {
-    AddProduct(title,status,amount);
+    AddProduct(title,status,amount,picurl);
         setTitle(title);
         setStatus(status);
         setAmount(amount);
+        setPicurl(picurl)
 
         setModel(!model)
 };
+
+useEffect(()=>{
+  ReadProduct()
+  console.log(product)
+},[])
 
   return (
     <KeyboardAvoidingView enabled  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -54,12 +59,12 @@ export default function Images() {
   <ScrollView>
     <View style={styles.modalcontainer}>
                    <Text style={{color:"#4ba26a",fontWeight:"bold", fontSize:15,paddingVertical:20,textAlign:"center"}}>ADD A NEW PRODUCT</Text>
-            {photo?
+            {picurl?
           <>
             <Image
               style={styles.image}
               source={{
-                uri: photo,
+                uri: picurl,
               }}
             />
           </>
@@ -78,7 +83,7 @@ export default function Images() {
                 uri: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png",
               }}
             />
-            <TouchableOpacity onPress={() => pickImage(setIsLoading,setPhoto)}>
+            <TouchableOpacity onPress={() => pickImage(setIsLoading,setPicurl)}>
             <Text style={styles.Text}>Click to upload</Text>
             </TouchableOpacity>
             </>
@@ -134,11 +139,20 @@ export default function Images() {
 
 
       <View style={{width:"100%", display:"flex", flexDirection:"row",justifyContent:"center", flexWrap: "wrap", gap:10, marginTop:20}}>
-        <Image source={require('../assets/house1.jpeg')} style={{width:"45%",height:150, borderRadius:10}}/>
-        <Image source={require('../assets/house2.jpeg')} style={{width:"45%",height:150, borderRadius:10}}/>
-        <Image source={require('../assets/house3.jpeg')} style={{width:"45%",height:150, borderRadius:10}}/>
-        <Image source={require('../assets/house4.jpeg')} style={{width:"45%",height:150, borderRadius:10}}/>
+        {/* <Image source={require('../assets/house1.jpeg')} style={{width:"45%",height:150, borderRadius:10}}/> */}
+        {/* <Image source={require('../assets/house2.jpeg')} style={{width:"45%",height:150, borderRadius:10}}/> */}
+        {/* <Image source={require('../assets/house3.jpeg')} style={{width:"45%",height:150, borderRadius:10}}/> */}
+        {/* <Image source={require('../assets/house4.jpeg')} style={{width:"45%",height:150, borderRadius:10}}/> */}
       </View>
+
+      {product.map((item,index)=>(
+        <View key={index}>
+          <Image source={{ uri: item.picurl }} style={{height:150, width:150}}/>
+          <Text>{item.title}</Text>
+          <Text>{item.status}</Text>
+          <Text>{item.amount}</Text>
+        </View>
+      ))}
       <StatusBar style="auto" />
     </View>
     </KeyboardAvoidingView>
